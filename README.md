@@ -1,8 +1,6 @@
 ## Install:
-yarn install or npm install
-
-## Run:
-yarn start or npm run start
+[DETAILS IN MY CHANNEL]
+(https://t.me/+CtchJrTcsJgzNTVl)
 
 ## Miniapp Telegram
 Link Mini APP: [Bums](https://t.me/bums/app?startapp=ref_7XQgZAGL)

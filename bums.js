@@ -68,7 +68,7 @@ class Bums {
 
             console.log(`========== Account ${accountNumber + 1} | ${userInfo.nickName} ==========`);
             this.log(`Join My Channel: https://t.me/+CtchJrTcsJgzNTVl `);
-            this.log(` `);
+            console.log(``);
             this.log(`ID: ${userInfo.userId}`);
             this.log(`Balance: ${gameInfo.coin}`);
             this.log(`Profit per hour: ${mineInfo.minePower}`);

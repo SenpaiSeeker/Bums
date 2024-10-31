@@ -36,7 +36,7 @@ class Bums {
         const FormData = require('form-data');
         let data = new FormData();
 
-        data.append('invitationCode', 'ref_jvI8RNYc');
+        data.append('invitationCode', 'ref_7XQgZAGL');
         data.append('initData', initData);
         const response = await axios.post(this.loginUrl, data, {headers: {...this.headers, 'Authorization': 'Bearer null', 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundarywphPfvZ46AbtTE6E'}});
         return response.data;
@@ -66,15 +66,16 @@ class Bums {
             const tapInfo = response.tapInfo;
             const mineInfo = response.mineInfo;
 
-            console.log(`========== Tài khoản ${accountNumber + 1} | ${userInfo.nickName} ==========`);
+            console.log(`========== Account ${accountNumber + 1} | ${userInfo.nickName} ==========`);
+            this.log(`Join My Telegram Channel: https://t.me/+CtchJrTcsJgzNTVl `);
             this.log(`ID: ${userInfo.userId}`);
             this.log(`Balance: ${gameInfo.coin}`);
-            this.log(`Lợi nhuận mỗi giờ: ${mineInfo.minePower}`);
+            this.log(`Profit per hour: ${mineInfo.minePower}`);
             this.log(`Level: ${gameInfo.level}`);
             this.log(`Energy Level: ${tapInfo.energy.level}`);
             this.log(`Energy: ${tapInfo.energy.value}`);
         } catch (error) {
-            this.log(`Lỗi khi lấy dữ liệu người dùng cho tài khoản ${accountNumber + 1}: ${error.message}`, 'error');
+            this.log(`Error getting user data for account ${accountNumber + 1}: ${error.message}`, 'error');
         }
     }
 
@@ -98,13 +99,13 @@ class Bums {
             const collectSeqNo = userData.tapInfo.collectInfo.collectSeqNo;
             const actionResponse = await this.guiTap(token, energy, collectSeqNo);
             if (actionResponse.msg == 'OK') {
-                this.log(`Đã nhận ${energy} năng lượng`, 'success');
+                this.log(`Received ${energy} energy`, 'success');
             } else {
-                this.log(`Lỗi khi thực hiện tap: ${actionResponse.msg}`, 'error');
+                this.log(`Error while executing tap: ${actionResponse.msg}`, 'error');
             }
 
         } catch (error) {
-            this.log(`Lỗi khi thực hiện tap: ${error.message}`, 'error');
+            this.log(`Error while executing tap: ${error.message}`, 'error');
         }
     }
 
@@ -124,7 +125,7 @@ class Bums {
             const response = await axios.post(this.taskFinishUrl, data, {headers: {...this.headers, 'Authorization': `Bearer ${token}` , 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundarywphPfvZ46AbtTE6E'}});
             return response.data;
         } catch (error) {
-            this.log(`Lỗi khi hoàn thành task: ${error.message}`, 'error');
+            this.log(`Error on completion task: ${error.message}`, 'error');
             return {msg: 'ERROR'}
         }
     }
@@ -138,15 +139,15 @@ class Bums {
                 let finishTask = await this.finishTask(token, task.id);
 
                 if (finishTask.msg == 'OK') {
-                    this.log(`Đã hoàn thành task: ${task.name}`, 'success');
+                    this.log(`Completed task: ${task.name}`, 'success');
                 } else {
-                    this.log(`Lỗi khi hoàn thành task: ${finishTask.msg}`, 'error');
+                    this.log(`Error on completion task: ${finishTask.msg}`, 'error');
                 }
 
                 await this.countdown(Math.floor(20));
             });
         } catch (error) {
-            this.log(`Lỗi khi thực hiện task: ${error.message}`, 'error');
+            this.log(`Error on completion task: ${error.message}`, 'error');
         }
     }
 
@@ -177,13 +178,13 @@ class Bums {
                     while ((money - mine.nextLevelCost) > 0 && mine.limitText == '') {
                         try {
                             let level = mine.level;
-                            this.log(`Thực hiện nâng cấp mine ${mine.mineId} lên level ${level + 1}`, 'info');
+                            this.log(`Perform the upgrade mine ${mine.mineId} Go level ${level + 1}`, 'info');
                             const upgradeResponse = await this.upgradeMine(token, mine.mineId);
                             if (upgradeResponse.msg == 'OK') {
                                 money -= mine.nextLevelCost;
-                                this.log(`Đã nâng cấp mine ${mine.mineId} lên level ${level + 1}`, 'success');
+                                this.log(`Upgraded mine ${mine.mineId} Go level ${level + 1}`, 'success');
                             } else {
-                                this.log(`Lỗi khi thực hiện nâng cấp: ${upgradeResponse.msg}`, 'error');
+                                this.log(`Error while performing upgrade: ${upgradeResponse.msg}`, 'error');
                                 break;
                             }
 
@@ -191,19 +192,19 @@ class Bums {
                             if (mines.msg == 'OK') {
                                 mine = mines.data.lists.find(mine => mine.mineId == mine.mineId);
                                 if (mine.limitText != '') {
-                                    this.log(`Không thể nâng cấp ${mine.mineId}: ${mine.limitText}`, 'warning');
+                                    this.log(`Cannot upgrade ${mine.mineId}: ${mine.limitText}`, 'warning');
                                     break;
                                 }
                             }
                         } catch (error) {
-                            this.log(`Lỗi khi thực hiện nâng cấp: ${error.message}`, 'error');
+                            this.log(`Error while performing upgrade: ${error.message}`, 'error');
                             break;
                         }
                     }
                 }
             }
         } catch (error) {
-            this.log(`Lỗi khi thực hiện nâng cấp: ${error.message}`, 'error');
+            this.log(`Error while performing upgrade: ${error.message}`, 'error');
         }
     }
 
@@ -218,11 +219,11 @@ class Bums {
             if (signLists.msg == 'OK' && signLists.data.signStatus == 0) {
                 const response = await axios.post(this.dailySignUrl, {}, {headers: {...this.headers, 'Authorization': `Bearer ${token}`}, 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundaryuHAJdP48FwnsoF9N'});
                 if (response.data.msg == 'OK') {
-                    this.log('Đã nhận phần thưởng daily sign', 'success');
+                    this.log('Received reward daily sign', 'success');
                 }
             }
         } catch (error) {
-            this.log(`Lỗi khi thực hiện daily sign: ${error.message}`, 'error');
+            this.log(`Error while executing daily sign: ${error.message}`, 'error');
         }
     }
 
@@ -256,11 +257,11 @@ class Bums {
 
                         await this.dailySign(token);
                     } else {
-                        this.log(`Lỗi khi xác thực tài khoản ${no + 1}: ${authResponse.msg}`, 'error');
+                        this.log(`Error while authenticating account ${no + 1}: ${authResponse.msg}`, 'error');
                     }
 
                 } catch (error) {
-                    this.log(`Lỗi khi xử lý tài khoản ${no + 1}: ${error.message}`, error);
+                    this.log(`Error while authenticating account ${no + 1}: ${error.message}`, error);
                 }
             }
 
@@ -291,7 +292,7 @@ class Bums {
     async waitWithCountdown(seconds) {
         for (let i = seconds; i >= 0; i--) {
             readline.cursorTo(process.stdout, 0);
-            process.stdout.write(`===== Đã hoàn thành tất cả tài khoản, chờ ${i} giây để tiếp tục vòng lặp =====`);
+            process.stdout.write(`===== Join Telegram for more scripts: https://t.me/+CtchJrTcsJgzNTVl...... Waiting ${i} to start again =====`);
             await new Promise(resolve => setTimeout(resolve, 1000));
         }
         console.log('');

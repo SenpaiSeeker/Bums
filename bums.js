@@ -67,6 +67,7 @@ class Bums {
             const mineInfo = response.mineInfo;
 
             console.log(`========== Account ${accountNumber + 1} | ${userInfo.nickName} ==========`);
+            console.log(``);
             this.log(`Join My Channel: https://t.me/+CtchJrTcsJgzNTVl `);
             console.log(``);
             this.log(`ID: ${userInfo.userId}`);

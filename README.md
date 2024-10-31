@@ -5,4 +5,4 @@ yarn install or npm install
 yarn start or npm run start
 
 ## Miniapp Telegram
-Link Mini APP: [Bums](https://t.me/bums/app?startapp=ref_jvI8RNYcHey)
+Link Mini APP: [Bums](https://t.me/bums/app?startapp=ref_7XQgZAGL)

@@ -47,7 +47,7 @@ class Bums {
             const hours = String(Math.floor(i / 3600)).padStart(2, '0');
             const minutes = String(Math.floor((i % 3600) / 60)).padStart(2, '0');
             const seconds = String(i % 60).padStart(2, '0');
-            process.stdout.write(colors.white(`[*] Cần chờ ${hours}:${minutes}:${seconds}     \r`));
+            process.stdout.write(colors.white(`[*] Wait ${hours}:${minutes}:${seconds}     \r`));
             await new Promise(resolve => setTimeout(resolve, 1000));
         }
         process.stdout.write('                                        \r');
@@ -67,7 +67,8 @@ class Bums {
             const mineInfo = response.mineInfo;
 
             console.log(`========== Account ${accountNumber + 1} | ${userInfo.nickName} ==========`);
-            this.log(`Join My Telegram Channel: https://t.me/+CtchJrTcsJgzNTVl `);
+            this.log(`Join My Channel: https://t.me/+CtchJrTcsJgzNTVl `);
+            this.log(` `);
             this.log(`ID: ${userInfo.userId}`);
             this.log(`Balance: ${gameInfo.coin}`);
             this.log(`Profit per hour: ${mineInfo.minePower}`);
@@ -292,7 +293,7 @@ class Bums {
     async waitWithCountdown(seconds) {
         for (let i = seconds; i >= 0; i--) {
             readline.cursorTo(process.stdout, 0);
-            process.stdout.write(`===== Join Telegram for more scripts: https://t.me/+CtchJrTcsJgzNTVl...... Waiting ${i} to start again =====`);
+            process.stdout.write(`=== Join Telegram for more scripts: https://t.me/+CtchJrTcsJgzNTVl...... Waiting ${i} to start again =====`);
             await new Promise(resolve => setTimeout(resolve, 1000));
         }
         console.log('');
